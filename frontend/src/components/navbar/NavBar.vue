@@ -8,6 +8,7 @@ import SearchIcon from "@/components/navbar/icons/SearchIcon.vue";
 </script>
 
 <template>
+    <!-- copied from https://daisyui.com/components/drawer/ -->
     <div class="drawer lg:drawer-open">
         <input id="my-drawer-4" type="checkbox" class="drawer-toggle"/>
         <div class="drawer-content">
@@ -29,7 +30,7 @@ import SearchIcon from "@/components/navbar/icons/SearchIcon.vue";
                     </div>
                 </div>
                 <div class="navbar-end">
-                    <button class="btn btn-ghost text-lg">Login</button>
+                    <RouterLink :to="{name: 'user-account-login-index'}" active-class="btn-active" class="btn btn-ghost text-lg">Login</RouterLink>
                 </div>
 
             </nav>
@@ -44,25 +45,25 @@ import SearchIcon from "@/components/navbar/icons/SearchIcon.vue";
                 <ul class="menu w-full grow">
                     <!-- List item -->
                     <li>
-                        <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-3" data-tip="Homepage">
+                        <RouterLink :to="{name: 'homepage-index'}"  active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-3" data-tip="Homepage">
                             <!-- Home icon -->
                             <HomepageIcon />
                             <span class="is-drawer-close:hidden text-base ml-2 whitespace-nowrap">Homepage</span>
-                        </button>
+                        </RouterLink>
                     </li>
 
                     <li>
-                        <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-3" data-tip="Friend">
+                        <RouterLink :to="{name: 'friend-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-3" data-tip="Friend">
                             <FriendIcon />
                             <span class="is-drawer-close:hidden text-base ml-2 whitespace-nowrap">Friend</span>
-                        </button>
+                        </RouterLink>
                     </li>
 
                     <li>
-                        <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-3" data-tip="Creation">
+                        <RouterLink :to="{name: 'create-index'}" active-class="menu-focus" class="is-drawer-close:tooltip is-drawer-close:tooltip-right py-3" data-tip="Creation">
                             <CreateIcon />
                             <span class="is-drawer-close:hidden text-base ml-2 whitespace-nowrap">Creation</span>
-                        </button>
+                        </RouterLink>
                     </li>
                 </ul>
             </div>
