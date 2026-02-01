@@ -16,7 +16,7 @@ def photo_upload_to(instance, filename):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.ImageField(default='user/photos/default.jpg', upload_to=photo_upload_to)
+    photo = models.ImageField(default='user/photos/default.png', upload_to=photo_upload_to)
     profile = models.TextField(default="Thanks for your subscribing", max_length=500) # max_length is not valid
     create_time = models.DateTimeField(default=now)
     update_time = models.DateTimeField(default=now)
