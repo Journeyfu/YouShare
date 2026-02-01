@@ -14,11 +14,11 @@ class LoginView(APIView):
             password = request.data.get("password").strip()
 
             if not username or not password:
-                return Response({"error": "username or password is required"})
+                return Response({"result": "username or password is required"})
 
             user = authenticate(username=username, password=password)
             if user: # username and password are matched
-                user_profile = UserProfile.objects.get(username=username)
+                user_profile = UserProfile.objects.get(user=user)
                 refresh = RefreshToken.for_user(user) # generate jwt
 
                 response = Response({
@@ -42,7 +42,7 @@ class LoginView(APIView):
                 return response
 
             else:
-                return Response({"error": "username or password is wrong"})
+                return Response({"result": "username or password is wrong"})
 
         except:
             return Response({

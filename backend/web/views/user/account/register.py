@@ -13,11 +13,11 @@ class RegisterView(APIView):
             password = request.data['password'].strip()
 
             if not username or not password:
-                return Response({'error': 'username or password is empty'})
+                return Response({'result': 'username or password is empty'})
 
 
             if User.objects.filter(username=username).exists():
-                return Response({'error': 'username is taken'})
+                return Response({'result': 'username is taken'})
 
             user = User.objects.create_user(username=username, password=password)
             user_profile = UserProfile.objects.create(user=user)

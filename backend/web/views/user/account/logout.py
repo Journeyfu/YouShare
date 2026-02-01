@@ -9,7 +9,7 @@ class LogoutView(APIView):
 
     def post(self, request):
         response = Response({
-            "status": "success",
+            "result": "success",
         })
         response.delete_cookie("refresh_token")
         return response
