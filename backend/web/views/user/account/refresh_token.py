@@ -33,7 +33,7 @@ class RefreshTokenView(APIView):
                     'access': str(refresh.access_token),
                 })
 
-        except Exception as e:
+        except:
             return Response({
                 "result": "refresh token outdated"
             }, status=401) # 401 is required

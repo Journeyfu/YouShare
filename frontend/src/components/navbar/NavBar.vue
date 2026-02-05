@@ -46,6 +46,7 @@ const user = useUserStore()
 
             </nav>
             <!-- Page content here -->
+            <!-- <slot> 是 Vue 组件里的“占位符”，用来让父组件把内容传进子组件里渲染 -->
             <slot>  </slot>
         </div>
 
