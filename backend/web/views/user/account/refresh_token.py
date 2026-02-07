@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+# F5 刷新不会自动调用这个api，调用位置在api.js里，当登录响应状态失败的时候会重新申请refreshtoken，用到了这个
 class RefreshTokenView(APIView):
     def post(self, request):
         try:

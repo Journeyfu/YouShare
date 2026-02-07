@@ -18,9 +18,10 @@ class LoginView(APIView):
 
             user = authenticate(username=username, password=password)
             if user: # username and password are matched
-                user_profile = UserProfile.objects.get(user=user)
-                refresh = RefreshToken.for_user(user) # generate jwt
+                user_profile = UserProfile.objects.get(user=user) # 从数据库读信息
+                refresh = RefreshToken.for_user(user) # generate jwt 得到一对access和refresh token
 
+                # access token
                 response = Response({
                     'result': 'success',
                     'access': str(refresh.access_token),
