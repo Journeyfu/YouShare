@@ -25,6 +25,7 @@ class CreateCharacterView(APIView):
             if not background_image:
                 return Response({'result': 'Background image is required'})
             Character.objects.create(
+                author=user_profile,
                 name=name,
                 profile=profile,
                 photo=photo,
