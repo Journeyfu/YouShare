@@ -31,7 +31,7 @@ class CreateCharacterView(APIView):
                 photo=photo,
                 background_image=background_image
             )
-            return Response({'result': 'Character created successfully'})
+            return Response({'result': 'success'})
 
         except:
             return Response({'result': 'system error, try later'})

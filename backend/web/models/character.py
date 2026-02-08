@@ -20,7 +20,7 @@ class Character(models.Model):
     name = models.CharField(max_length=50)
     photo = models.ImageField(upload_to=photo_upload_to)
     profile = models.TextField(max_length=100000)
-    background_image = models.ImageField(upload_to=photo_upload_to)
+    background_image = models.ImageField(upload_to=background_image_upload_to)
     create_time = models.DateTimeField(default=now)
     update_time = models.DateTimeField(default=now)
 
