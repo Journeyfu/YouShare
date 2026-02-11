@@ -44,8 +44,8 @@ async function handleLogin(){
 
 <template>
     <div class="flex justify-center mt-30">
+        <!-- 当用户点击提交按钮时，阻止浏览器默认刷新行为，然后调用 handleLogin 方法来处理表单提交  -->
         <form @submit.prevent="handleLogin" class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-            <legend class="fieldset-legend">Login</legend>
 
             <label class="label">Username</label>
             <input v-model="username" type="text" class="input" placeholder="Username" />
