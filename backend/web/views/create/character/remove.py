@@ -17,6 +17,6 @@ class RemoveCharacterView(APIView):
             remove_old_photo(character.background_image)
             character.delete()
 
-            return Response({'result', 'success'})
+            return Response({'result': 'success'})
         except:
             return Response({'result': 'system error, try later'})
