@@ -7,8 +7,31 @@ import CreateIcon from "@/components/navbar/icons/CreateIcon.vue";
 import SearchIcon from "@/components/navbar/icons/SearchIcon.vue";
 import {useUserStore} from "@/stores/user.js";
 import UserMenu from "@/components/navbar/UserMenu.vue";
+import {ref, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
 
 const user = useUserStore()
+const searchQuery = ref('')
+
+const router = useRouter()
+const route = useRoute()
+
+watch(()=> route.query.q, newQ =>{
+    console.log('watch-1')
+
+   //  newQ是空返回'', 否则返回newQ
+   searchQuery.value = newQ || ''
+})
+
+function handleSearch(){
+    router.push({
+        name: 'homepage-index',
+        query: {
+            q: searchQuery.value.trim(),
+        }
+    })
+
+}
 </script>
 
 <template>
@@ -25,13 +48,13 @@ const user = useUserStore()
                     <div class="px-2 font-bold text-xl">AI Friends</div>
                 </div>
                 <div class="narbar-center w-4/5 max-w-180 flex justify-center">
-                    <div class="join w-4/5 flex justify-center">
-                      <input class="input join-item rounded-l-full w-4/5" placeholder="Search everything you interest" />
+                    <form @submit.prevent=handleSearch class="join w-4/5 flex justify-center">
+                      <input v-model='searchQuery' class="input join-item rounded-l-full w-4/5" placeholder="Search everything you interest" />
                       <button class="btn join-item rounded-r-full">
                           <SearchIcon />
                           Search
                       </button>
-                    </div>
+                    </form>
                 </div>
                 <div class="navbar-end">
                     <RouterLink v-if="user.isLogin()" active-class="btn-active"  :to="{name: 'create-index'}" class="btn btn-ghost text-base mr-6">
