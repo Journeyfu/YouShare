@@ -1,7 +1,6 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import TokenAuthentication
 
 from web.models.friend import Friend
 
@@ -33,10 +32,10 @@ class GetListFriendView(APIView):
                         }
                     }
                 })
-                return Response({
-                    'result': 'success',
-                    'friends': friends
-                })
+            return Response({
+                'result': 'success',
+                'friends': friends
+            })
         except:
             return Response({
                 'result': 'system error, try later'
