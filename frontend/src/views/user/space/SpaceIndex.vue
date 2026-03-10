@@ -1,7 +1,7 @@
 <script setup>
 
 import UserInfoField from "@/views/user/space/components/UserInfoField.vue";
-import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, useTemplateRef} from "vue";
+import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, useTemplateRef, watch} from "vue";
 import api from "@/js/http/api.js";
 import {useRoute} from "vue-router";
 import Character from "@/components/character/Character.vue";
@@ -13,6 +13,17 @@ const hasCharacters = ref(true)
 const sentinelRef = useTemplateRef('sentinel-ref')
 
 const route = useRoute()
+
+function reset(){
+    userProfile.value = null
+    characters.value = []
+    isLoading.value = false
+    hasCharacters.value = true
+    loadMore()
+}
+watch(() => route.params.user_id, ()=>{
+    reset()
+})
 
 function checkSentinelVisible(){
     if(!sentinelRef.value) return false
