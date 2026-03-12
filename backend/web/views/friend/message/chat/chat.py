@@ -1,4 +1,8 @@
-from langchain_core.messages import HumanMessage
+import json
+
+from django.http import StreamingHttpResponse
+from langchain_core.messages import HumanMessage, BaseMessageChunk
+from rest_framework.renderers import BaseRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -6,9 +10,15 @@ from rest_framework.permissions import IsAuthenticated
 from web.models.friend import Friend
 from web.views.friend.message.chat.graph import ChatGraph
 
+class SSERenderer(BaseRenderer):
+    media_type = 'text/event-stream'
+    format = 'txt'
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        return data
 
 class MessageChatView(APIView):
     permission_classes = [IsAuthenticated]
+    renderer_classes = [SSERenderer]  # 引入渲染器
     def post(self, request):
         friend_id = request.data['friend_id']
         message = request.data['message'].strip()
@@ -28,8 +38,22 @@ class MessageChatView(APIView):
         inputs = {
             'messages': [HumanMessage(message)]
         }
-        res = app.invoke(inputs)
-        print(res['messages'][-1].content) # List: 0: human messages 1: ai messages
-        return Response({
-            'result': 'success'
-        })
+        # # 非流式回复
+        # res = app.invoke(inputs)
+        # print(res['messages'][-1].content) # List: 0: human messages 1: ai messages
+
+        # 流式回复
+        def event_stream(): # SSE: Server-Sent Events protocol
+            full_usage = {}
+            for msg, metadata in app.stream(inputs, stream_mode="messages"):
+                if isinstance(msg, BaseMessageChunk):
+                    if msg.content:
+                        yield f'data: {json.dumps({'content': msg.content}, ensure_ascii=False)}\n\n'
+                    if hasattr(msg, 'usage_metadata') and msg.usage_metadata:
+                        full_usage = msg.usage_metadata
+            yield 'data: [DONE]\n\n'
+            print(full_usage)
+
+        response = StreamingHttpResponse(event_stream(), content_type="text/event-stream")
+        response['Cache-Control'] = 'no-cache'
+        return response
