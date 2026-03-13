@@ -65,7 +65,7 @@ class MessageChatView(APIView):
                     [m.model_dump() for m in inputs['messages']],
                     ensure_ascii=False,
                 )[:10000],
-                output=full_output,
+                output=full_output[:500],
                 input_tokens=input_tokens,
                 output_tokens=output_tokens,
                 total_tokens=total_tokens,
