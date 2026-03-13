@@ -66,6 +66,7 @@ async function openChatField(){
     }
 
 }
+
 </script>
 
 <template>
@@ -106,7 +107,7 @@ async function openChatField(){
             </div>
         </div>
     </div>
-    <RouterLink :to="{name: 'user-space-index', params:{user_id: character.author.user_id}}" class="flex items-center mt-4 gap-2 w-60">
+    <RouterLink :to="{name: 'user-space-index', params: {user_id: character.author.user_id}}" class="flex items-center mt-4 gap-2 w-60">
         <div class="avatar">
             <div class="w-7 rounded-full">
                 <img :src="character.author.photo" alt="">

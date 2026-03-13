@@ -108,5 +108,15 @@ router.beforeEach((to, from) => {
     }
     return true;
 })
-
+// const rawResolve = router.resolve.bind(router)
+//
+// router.resolve = function (to, currentLocation) {
+//   if (to && typeof to === 'object' && to.params?.user_id !== undefined) {
+//     console.group('router.resolve debug')
+//     console.log('to =', to)
+//     console.trace()
+//     console.groupEnd()
+//   }
+//   return rawResolve(to, currentLocation)
+// }
 export default router

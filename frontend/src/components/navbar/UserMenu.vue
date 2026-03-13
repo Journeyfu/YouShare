@@ -57,7 +57,7 @@ async function handleLogout(){
     </li>
 
     <li>
-        <RouterLink @click="closeMenu" :to="{name: 'user-profile-index', params: {user_id: user.id}}" class="text-sm font-bold py-3">
+        <RouterLink @click="closeMenu" :to="{name: 'user-profile-index'}" class="text-sm font-bold py-3">
             <UserProfileIcon />
             Edit Profile
         </RouterLink>
