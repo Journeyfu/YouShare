@@ -54,7 +54,7 @@ class ChatGraph:
             messages: Annotated[Sequence[BaseMessage], add_messages] # add操作表示追加返回结果到消息列表末尾
 
         def model_call(state: AgentState) -> AgentState:
-            pprint(state["messages"])
+            # pprint(state["messages"])
             res = llm.invoke(state['messages'])
             return {'messages': [res]}
 
