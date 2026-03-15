@@ -50,7 +50,7 @@ class UpdateProfileView(APIView):
                 'photo': user_profile.photo.url,
             })
         except Exception as e:
-            print(e)
+            # print(e)
             return Response({
                 'result', 'system error, try later'
             })
