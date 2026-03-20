@@ -7,7 +7,7 @@ const props = defineProps(['backgroundImage'])
 const myBackgroundImage = ref(props.backgroundImage)
 
 watch(()=> props.backgroundImage, newVal => {
-    myBackgroundImage.val = newVal
+    myBackgroundImage.value = newVal
 })
 
 const fileInputRef = useTemplateRef('file-input-ref')

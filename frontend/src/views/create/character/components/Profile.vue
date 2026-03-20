@@ -6,7 +6,7 @@ const props = defineProps(['profile'])
 const myProfile = ref(props.profile)
 
 watch(()=> props.profile, newVal => {
-    myProfile.val = newVal
+    myProfile.value = newVal
 })
 
 defineExpose({

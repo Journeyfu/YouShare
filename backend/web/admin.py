@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 
 from web.models.user import UserProfile
-from web.models.character import Character
+from web.models.character import Character, Voice
 from web.models.friend import Friend, Message, SystemPrompt
 
 
@@ -15,8 +15,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Character)
 class CharacterAdmin(admin.ModelAdmin):
-    raw_id_fields = ('author',)
+    raw_id_fields = ('author', 'voice')
 
+admin.site.register(Voice)
 
 @admin.register(Friend)
 class FriendAdmin(admin.ModelAdmin):
@@ -26,6 +27,7 @@ class FriendAdmin(admin.ModelAdmin):
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     raw_id_fields = ('friend',)
+
 
 
 admin.site.register(SystemPrompt)

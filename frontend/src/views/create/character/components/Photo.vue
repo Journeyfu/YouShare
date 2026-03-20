@@ -8,7 +8,7 @@ const props = defineProps(['photo'])
 const myPhoto = ref(props.photo)
 
 watch(()=> props.photo, newVal => {
-    myPhoto.val = newVal
+    myPhoto.value = newVal
 })
 
 const fileInputRef = useTemplateRef("file-input-ref")

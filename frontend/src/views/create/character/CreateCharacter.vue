@@ -4,11 +4,13 @@ import Photo from "@/views/create/character/components/Photo.vue";
 import BackgroundImage from "@/views/create/character/components/BackgroundImage.vue";
 import Name from "@/views/create/character/components/Name.vue";
 import Profile from "@/views/create/character/components/Profile.vue";
-import {ref, useTemplateRef} from "vue";
+import {onMounted, ref, useTemplateRef} from "vue";
 import {base64ToFile} from "@/js/utils/base64_to_file.js";
 import api from "@/js/http/api.js";
 import {useRouter} from "vue-router";
 import {useUserStore} from "@/stores/user.js";
+import Voice from "@/views/create/character/components/Voice.vue";
+
 
 const user = useUserStore()
 const router = useRouter()
@@ -16,21 +18,41 @@ const router = useRouter()
 
 const photoRef = useTemplateRef('photo-ref')
 const nameRef = useTemplateRef('name-ref')
+const voiceRef = useTemplateRef('voice-ref')
 const profileRef = useTemplateRef('profile-ref')
 const backgroundImageRef = useTemplateRef('background-image-ref')
 const errorMessage = ref('')
 
-async function handleCreate(){
+const voices = ref([])
+const curVoiceId = ref(null)
+
+onMounted(async () => {
+    try{
+        const res = await api.get('/api/create/character/voice/get_list/', {})
+        const data = res.data
+        if(data.result === 'success'){
+            voices.value = data.voices
+            curVoiceId.value = data.voices[0].id
+        }
+    }catch(err){
+        console.log(err)
+    }
+})
+
+async function handleCreate() {
     const photo = photoRef.value.myPhoto
     const name = nameRef.value.myName?.trim()
+    const voice = voiceRef.value.myVoice
     const profile = profileRef.value.myProfile?.trim()
     const backgroundImage = backgroundImageRef.value.myBackgroundImage
 
     errorMessage.value = ''
-    if(!photo){
+    if (!photo) {
         errorMessage.value = "avatar is required"
-    }else if (!name){
+    } else if (!name) {
         errorMessage.value = "name is required"
+    }else if(!voice){
+        errorMessage.value = "voice is required"
     }else if(!profile){
         errorMessage.value = "profile is required"
     }else if(!backgroundImage){
@@ -38,6 +60,7 @@ async function handleCreate(){
     }else{
         const formData = new FormData()
         formData.append('name', name)
+        formData.append('voice_id', voice)
         formData.append('profile', profile)
         formData.append('photo', base64ToFile(photo, "photo.png"))
         formData.append('background_image', base64ToFile(backgroundImage, "background_image.png" ))
@@ -73,6 +96,7 @@ async function handleCreate(){
                 <Photo ref="photo-ref" />
                 <Name ref="name-ref" />
                 <Profile ref="profile-ref" />
+                <Voice ref="voice-ref" :voices="voices" :curVoiceId="curVoiceId" />
                 <BackgroundImage ref="background-image-ref" />
 
                 <p v-if="errorMessage" class="text-sm text-red-500">{{errorMessage}}</p>
